@@ -188,8 +188,8 @@ questions:
                       description: LoadBalancer (Expose Ports)
                     - value: ClusterIP
                       description: ClusterIP (Do Not Expose Ports)
-                    - value: Simple
-                      description: Deprecated CHANGE THIS
+                    - value: NodePort
+                      description: NodePort
               - variable: loadBalancerIP
                 label: LoadBalancer IP
                 description: "MetalLB Only: Selects the Loadbalancer IP to expose on. Required when using PortalButton with MetalLB"
@@ -216,6 +216,12 @@ questions:
                               type: int
                               default: 10140
                               required: true
+                          - variable: nodePort
+                            description: Leave Empty to Disable
+                            label: nodePort
+                            schema:
+                              type: int
+                              default: 10140
   - variable: serviceexpert
     group: Networking and Services
     label: Show Expert Config
