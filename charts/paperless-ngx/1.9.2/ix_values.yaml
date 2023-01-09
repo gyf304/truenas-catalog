@@ -1,0 +1,63 @@
+image:
+  repository: ghcr.io/paperless-ngx/paperless-ngx
+  pullPolicy: IfNotPresent
+  tag: 1.9.2
+
+securityContext:
+  runAsNonRoot: false
+  readOnlyRootFilesystem: false
+
+podSecurityContext:
+  runAsUser: 0
+  runAsGroup: 0
+
+secretEnv:
+  PAPERLESS_ADMIN_USER: "admin"
+  PAPERLESS_ADMIN_PASSWORD: "admin"
+  PAPERLESS_ADMIN_MAIL: "admin@example.com"
+
+env:
+  PAPERLESS_PORT: "{{ .Values.service.main.ports.main.targetPort }}"
+  PAPERLESS_DATA_DIR: "/data/"
+  PAPERLESS_CONSUMPTION_DIR: "/consume/"
+  PAPERLESS_MEDIA_ROOT: "/media/"
+  PAPERLESS_URL: ""
+  USERMAP_UID: "{{ .Values.security.PUID }}"
+  USERMAP_GID: "{{ .Values.podSecurityContext.fsGroup }}"
+  PAPERLESS_TIME_ZONE: "{{ .Values.TZ }}"
+  PAPERLESS_WEBSERVER_WORKERS: 2
+  PAPERLESS_SECRET_KEY:
+    secretKeyRef:
+      name: paperlessng-secrets
+      key: PAPERLESS_SECRET_KEY
+  PAPERLESS_DBENGINE: sqlite
+  PAPERLESS_REDIS:
+    secretKeyRef:
+      name: rediscreds
+      key: url
+
+service:
+  main:
+    ports:
+      main:
+        targetPort: 8000
+        port: 10140
+
+persistence:
+  data:
+    enabled: true
+    mountPath: "/data"
+  consume:
+    enabled: true
+    mountPath: "/consume"
+  media:
+    enabled: true
+    mountPath: "/media"
+
+redis:
+  enabled: true
+  existingSecret: "rediscreds"
+  redisUsername: default
+
+portal:
+  enabled: true
