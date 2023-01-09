@@ -127,6 +127,12 @@ questions:
             type: int
             required: true
             default: 2
+        - variable: PAPERLESS_CSRF_TRUSTED_ORIGINS
+          label: "PAPERLESS_CSRF_TRUSTED_ORIGINS"
+          description: "A comma-separated list of trusted origins."
+          schema:
+            type: string
+            default: ""
   - variable: TZ
     label: Timezone
     group: "General Settings"
