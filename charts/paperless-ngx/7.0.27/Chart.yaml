@@ -1,8 +1,8 @@
 apiVersion: v2
 kubeVersion: ">=1.16.0-0"
 name: paperless-ngx
-version: 7.0.26
-appVersion: "1.11.3"
+version: 7.0.27
+appVersion: "1.13.0"
 description: Paperless-ngx is an application by Daniel Quinn and contributors that indexes your scanned documents.
 type: application
 deprecated: false
